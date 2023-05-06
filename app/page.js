@@ -6,7 +6,7 @@ const page = () => {
     <div className="container">
       <Form />
       <section className="todosContainer">
-        <TodoItem/>
+        <TodoItem title={'Todo item'} description={'This is todo description'} id={'Sample id'} completed={true} />
       </section>
     </div>
   );
