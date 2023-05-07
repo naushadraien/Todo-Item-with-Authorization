@@ -62,9 +62,9 @@ export const POST = async (req, res) => {
       const token = generateToken(user._id); //calling the generateToken function to generate the token for the user
 
       console.log("Token is", token);
-    //   console.log('Response is', res);
+      // console.log('Response is', res);
       //cookie is not working
-      // setCookie(res, token, true); //calling the setCookie function to set the cookie in the browser of the user
+      setCookie(token, true); //calling the setCookie function to set the cookie in the browser of the user
 
       return NextResponse.json(
         {
