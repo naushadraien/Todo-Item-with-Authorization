@@ -5,8 +5,10 @@ import bcrypt from "bcrypt";
 
  const handler = async (req, res) => {
     
-    if (req.method !== "POST")
-    return errorHandler(res, 400, "Only POST Method is allowed");
+  if (req.method !== "POST")
+  return res.status(400).json({
+      message: "Only POST Method is allowed"
+  });
 
   try {
     const { email, password } = req.body; //destructuring the body object and getting the email and password from body by destructuring
@@ -58,10 +60,12 @@ import bcrypt from "bcrypt";
 
       setCookie(res,token, true); //calling the setCookie function to set the cookie in the browser of the user
 
-      return res.json(
+      return res.status(200).json(
         {
           //NextResponse is a new way in nextjs to send the message to the user
+          success: true,
           message: `Log in successfully, ${user.name}`, //this is for sending a success response to the user
+          user,
         },
       );
     }

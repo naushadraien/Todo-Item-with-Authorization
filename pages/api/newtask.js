@@ -1,25 +1,39 @@
-import { connectDB } from "@/utils/dbConn";
+import { connectDB, isAuth } from "@/utils/dbConn";
 import { Task } from "@/models/task";
 // import { NextResponse } from "next/server";
 
  const handler = async (req, res) => {
     if (req.method !== "POST")
-    return errorHandler(res, 400, "Only POST Method is allowed");
+    return res.status(400).json({
+        message: "Only POST Method is allowed"
+    });
     try {
-        const body = await req.json();
-        const {title, description} = body; //destructuring the body object
+        const {title, description} = req.body; //destructuring the body object
+
+        if(!title || !description) { // to check if the user has entered all the fields or not
+            return res.status(400).json({
+                message: 'Please enter all fields!'
+            });
+        }
 
         // console.log(body);
         await connectDB(); 
         // console.log(process.env.MONGODB_URL);
 
+        const user = await isAuth(req);
+        if(!user) { //if user is not present then return a message as below array
+            return res.status(401).json({
+                message: 'Please Login to see your todos'
+            })
+        }; 
+
         await Task.create({
             title,
             description,
-            user: '60f0b0b3e3b3c2a8b8b0b0b0'
+            user: user._id,
         });
         return res.json({ //NextResponse is a new way in nextjs to send the message to the user
-            message: 'Your message has been sent successfully' //this is for sending a success response to the user
+            message: 'Your task has been sent successfully' //this is for sending a success response to the user
         },
         )
     } catch (error) {

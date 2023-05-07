@@ -3,6 +3,11 @@ import { setCookie } from "@/utils/dbConn";
 
  const handler = async (req, res) => {
 
+  if (req.method !== "GET")
+    return res.status(400).json({
+        message: "Only GET Method is allowed"
+    });
+
   try {
     
       setCookie(res,null, false); //calling the setCookie function to set the cookie in the browser of the user

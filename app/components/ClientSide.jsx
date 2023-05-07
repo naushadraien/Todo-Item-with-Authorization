@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import { useState, createContext, useContext } from "react";
+import { Toaster } from "react-hot-toast";
 
-const Context = createContext({ user: {} });
+export const Context = createContext({ user: {} });
 
 export const ContextProvider = ({ children }) => {
   const [user, setUser] = useState({});
@@ -11,6 +12,7 @@ export const ContextProvider = ({ children }) => {
   return (
     <Context.Provider value={{ user, setUser }}>
       {children} {/* This is the children of ContextProvider */}
+      <Toaster /> 
     </Context.Provider>
   );
 };
@@ -22,7 +24,7 @@ export const LogoutButton = () => {
   };
   return ( // This is the children of LogoutButton
     <>
-      {user.id ? (
+      {user._id ? (
         <button className="btn" onClick={handleLogout}>
           Logout
         </button>

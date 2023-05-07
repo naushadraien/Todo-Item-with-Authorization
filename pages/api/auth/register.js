@@ -4,8 +4,10 @@ import { connectDB, generateToken, setCookie } from "@/utils/dbConn";
 import bcrypt from "bcrypt";
 
  const handler = async (req, res) => {
-    if (req.method !== "POST")
-    return errorHandler(res, 400, "Only POST Method is allowed");
+  if (req.method !== "POST")
+  return res.status(400).json({
+      message: "Only POST Method is allowed"
+  });
 
   try {
     const { name, email, password } = req.body;
@@ -62,7 +64,9 @@ import bcrypt from "bcrypt";
       return res.json(
         {
           //NextResponse is a new way in nextjs to send the message to the user
+          success: true,
           message: "User registered successfully", //this is for sending a success response to the user
+          user,
         },
       );
     }

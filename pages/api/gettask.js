@@ -5,13 +5,22 @@ import { Task } from "@/models/task";
  const handler = async (req, res) => {
   
     if (req.method !== "GET")
-    return errorHandler(res, 400, "Only GET Method is allowed");
+    return res.status(400).json({
+        message: "Only GET Method is allowed"
+    });
 
     try {
 
         await connectDB(); 
 
-        const user = isAuth(req);
+        const user = await isAuth(req);
+
+        if(!user) { //if user is not present then return a message as below array
+            return res.status(401).json({
+                message: 'Please Login to see your todos'
+            })
+        }; 
+
         console.log('user', user);
 
         const todos = await Task.find({user:user._id });
