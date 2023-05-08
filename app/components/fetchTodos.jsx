@@ -1,4 +1,3 @@
-import React from 'react'
 import { TodoItem } from './ServerSide'
 import { cookies } from 'next/headers';
 

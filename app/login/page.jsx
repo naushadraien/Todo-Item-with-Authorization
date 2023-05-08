@@ -5,10 +5,6 @@ import { Context } from '../components/ClientSide';
 import {redirect} from 'next/navigation'
 import { toast } from 'react-hot-toast';
 
-export const metadata = {
-    title: 'Login',
-    description: 'Todo App built with Next.js and mongodb',
-  }
 
 const page = () => {
 
