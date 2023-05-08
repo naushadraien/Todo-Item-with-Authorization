@@ -15,6 +15,7 @@ import { setCookie } from "@/utils/dbConn";
       return res.json(
         {
           //NextResponse is a new way in nextjs to send the message to the user
+          success: true,
           message: 'Logged out successfully', //this is for sending a success response to the user
         },
       );

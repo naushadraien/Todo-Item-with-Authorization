@@ -33,6 +33,7 @@ import { Task } from "@/models/task";
             user: user._id,
         });
         return res.json({ //NextResponse is a new way in nextjs to send the message to the user
+            success: true, // to send the success message to the user
             message: 'Your task has been sent successfully' //this is for sending a success response to the user
         },
         )

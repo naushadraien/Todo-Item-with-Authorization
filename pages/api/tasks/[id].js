@@ -35,7 +35,7 @@ import { Task } from "@/models/task";
                  
                     await task.save(); //this is for saving the task
                     res.status(200).json({ 
-                        status: 'success',
+                        success: true,
                         message: 'Task has been updated successfully' //this is for sending a success response to the user
                     });
                 };
@@ -57,7 +57,7 @@ import { Task } from "@/models/task";
 
         await task.deleteOne(); //this is for deleting the task
         res.status(200).json({
-            status: 'success',
+            success: true,
             message: 'Task has been deleted successfully' //this is for sending a success response to the user  
         })};
 

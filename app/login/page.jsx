@@ -36,7 +36,7 @@ const page = () => {
       toast.success(data.message);
      }
     } catch (error) {
-     return toast.error(data.message);
+      return toast.error(error.toString());
     }
   }
 

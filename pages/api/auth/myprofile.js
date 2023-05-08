@@ -16,8 +16,10 @@ import {isAuth } from "@/utils/dbConn";
             message: 'Please Login First'
         })
     }else{
-        return res.json({ //NextResponse is a new way in nextjs to send the message to the user
-            user // to send the user to the user
+        return res.status(200).json({ //NextResponse is a new way in nextjs to send the message to the user
+          success: true, // to send the success message to the user
+            user, // to send the user to the user
+        
         },
         )
     };

@@ -1,13 +1,30 @@
 "use client";
 
 import Link from "next/link";
-import { useState, createContext, useContext } from "react";
-import { Toaster } from "react-hot-toast";
+import { useState, createContext, useContext, useEffect } from "react";
+import { Toaster, toast } from "react-hot-toast";
+import { useRouter } from "next/navigation";
+
 
 export const Context = createContext({ user: {} });
 
 export const ContextProvider = ({ children }) => {
   const [user, setUser] = useState({});
+
+  useEffect(() => { //this is for checking if the user is logged in or not if logged in the show the user data as it is if user is not logged in then show empty data
+  const persistedUser = async ()=>{
+    const res = await fetch('/api/auth/myprofile');
+    const data = await res.json();
+    if(data.success) {
+      setUser(data.user);
+    };
+    // console.log(user);
+  };
+
+  persistedUser(); //calling the function
+
+  },[]);
+  
 
   return (
     <Context.Provider value={{ user, setUser }}>
@@ -18,9 +35,24 @@ export const ContextProvider = ({ children }) => {
 };
 
 export const LogoutButton = () => {
-  const { user } = useContext(Context); // This is the user from ContextProvider
-  const handleLogout = () => {
-    alert("Logout");
+  const { user, setUser } = useContext(Context); // This is the user from ContextProvider
+  // console.log(user);
+  const handleLogout = async () => {
+    try {
+      const res = await fetch("/api/auth/logout");
+      const data = await res.json();
+      console.log(data);
+      if(!data.success) {
+        return toast.error(data.message);
+      }else{
+        setUser({});
+        return toast.success(data.message);
+      }
+    } catch (error) {
+      return toast.error(error);
+    }
+
+
   };
   return ( // This is the children of LogoutButton
     <>
@@ -36,12 +68,50 @@ export const LogoutButton = () => {
 };
 
 export const TodoBtn = ({id, completed})=>{
-  const handleDelete = (id)=>{
-    alert(`Deleting ${id}`)
+  
+  const router = useRouter();
+
+  const handleDelete = async (id)=>{
+
+    try {
+      const res = await fetch(`/api/tasks/${id}`, {
+        method: 'DELETE',
+      });
+      const data = await res.json();
+      if(!data.success) {
+        return toast.error(data.message);
+      }else{
+         toast.success(data.message);
+        router.refresh();
+      }
+    } catch (error) {
+      return toast.error(error.toString());
+    }
+
   }
+
+  const handleUpdate = async (id)=>{
+
+    try {
+      const res = await fetch(`/api/tasks/${id}`, {
+        method: 'PUT',
+      });
+      const data = await res.json();
+      if(!data.success) {
+        return toast.error(data.message);
+      }else{
+         toast.success(data.message);
+        router.refresh();
+      }
+    } catch (error) {
+      return toast.error(error.toString());
+    }
+
+  }
+
   return (
     <>
-    <input type="checkbox" checked={completed}/>
+    <input type="checkbox" checked={completed} onChange={()=>handleUpdate(id)} />
     <button className="btn" onClick={()=>handleDelete(id)}>Delete</button>
     </>
   )

@@ -21,11 +21,12 @@ import { Task } from "@/models/task";
             })
         }; 
 
-        console.log('user', user);
+        // console.log('user', user);
 
         const todos = await Task.find({user:user._id });
 
         return res.json({ //NextResponse is a new way in nextjs to send the message to the user
+            success: true, // to send the success message to the user
             todos // to send the todos to the user
         },
         )
