@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { Context } from "../components/ClientSide";
 import { redirect } from "next/navigation";
 
-const about = () => {
+const About = () => {
 
   const {user} =useContext(Context); //this is the user from ContextProvider
   if(!user._id) return redirect('/login'); //this is for checking if the user is logged in or not if user is not logged in then redirect to login page
@@ -17,4 +17,4 @@ const about = () => {
   )
 }
 
-export default about
+export default About;

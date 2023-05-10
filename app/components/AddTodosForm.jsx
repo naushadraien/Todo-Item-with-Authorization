@@ -5,7 +5,7 @@ import { toast } from "react-hot-toast";
 import { redirect, useRouter } from "next/navigation";
 import { Context } from "./ClientSide";
 
-const addTodosForm = () => {
+const AddTodosForm = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
 
@@ -52,4 +52,4 @@ const addTodosForm = () => {
   )
 }
 
-export default addTodosForm
+export default AddTodosForm
