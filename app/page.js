@@ -4,7 +4,7 @@ import { Suspense } from "react";
 
 
 
-const page = async () => {
+const page = () => {
 
   return (
     <div className="container">
