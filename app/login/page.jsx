@@ -1,8 +1,8 @@
 'use client'
 import Link from 'next/link'
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { Context } from '../components/ClientSide';
-import {redirect} from 'next/navigation'
+import {redirect, useRouter} from 'next/navigation'
 import { toast } from 'react-hot-toast';
 
 
@@ -10,6 +10,8 @@ const Page = () => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const router = useRouter();
 
   const {user, setUser} = useContext(Context); // destructring the user from ContextProvider
 
@@ -36,9 +38,13 @@ const Page = () => {
     }
   }
 
-  if(user._id) {
-    return redirect('/');
-  }
+  useEffect(() => {
+    if(user._id) {
+      router.refresh();
+       redirect('/');
+    }
+  },[user]);
+ 
   
   return (
     <div className='login'>
